@@ -24,27 +24,17 @@ def get_MFCC(sr,audio):
     features = preprocessing.scale(features)
     return features
 
-## Path to training data
-#pathTrainM ="~/Training data/Male training/"
-#pathTrainF ="~/Training data/Female training/"
-#sourceM   = pathTrainM
-#sourceF   = pathTrainF
-
-# Path to save trained model   
-dest      = "~/Training data/GMM/"         
-
 with open("maleaudios") as rf:
     filesM = [i.strip() for i in rf.readlines()]
 
 with open("femaleaudios") as rf:
     filesF = [i.strip() for i in rf.readlines()]
 
-#filesM    = [os.path.join(sourceM,m) for m in os.listdir(sourceM) if m.endswith('.wav')]
-#filesF    = [os.path.join(sourceF,f) for f in os.listdir(sourceF) if f.endswith('.wav')]
 featuresM = np.asarray(())
 featuresF = np.asarray(())
 
 # Featurization of Male audio files
+
 for m in filesM[:100000]:
     try:
         sr,audio  = read(m)
@@ -55,7 +45,9 @@ for m in filesM[:100000]:
             featuresM = np.vstack((featuresM, vectorM))
     except Exception as e:
         print("Exception in file {}".format(m))
+        
 # Featurization of Female audio files
+
 for f in filesF[:100000]:
     try:
         sr,audio  = read(m)
@@ -66,9 +58,10 @@ for f in filesF[:100000]:
             featuresF = np.vstack((featuresF, vectorF))
     except Exception as e:
         print("Exception in file {}".format(f))
-#featuresF = np.reshape(featuresF,[1,-1])
-#featuresM = np.reshape(featuresF,[1,-1])
+        
+
 # Creation of GMMs for Male and Female 
+
 male_model = GaussianMixture(n_components = 8, max_iter = 500, covariance_type='diag', n_init = 3)
 female_model = GaussianMixture(n_components = 8, max_iter = 500, covariance_type='diag', n_init = 3)
 male_model.fit(featuresM)
@@ -77,6 +70,7 @@ female_model.fit(featuresF)
 
 
 # Model saved as .gmm
+
 cPickle.dump(male_model,open("male.gmm",'wb'))
 cPickle.dump(female_model,open("female.gmm",'wb'))
 
