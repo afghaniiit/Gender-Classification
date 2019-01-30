@@ -25,13 +25,13 @@ def get_MFCC(sr,audio):
     return features
 
 ## Path to training data
-#pathTrainM ="/home/amit/Downloads/Elemos/GenderClassificationProject/Voice Gender Detection using GMM/Mihup/Training data/Male training/"
-#pathTrainF ="/home/amit/Downloads/Elemos/GenderClassificationProject/Voice Gender Detection using GMM/Mihup/Training data/Female training/"
+#pathTrainM ="~/Training data/Male training/"
+#pathTrainF ="~/Training data/Female training/"
 #sourceM   = pathTrainM
 #sourceF   = pathTrainF
 
 # Path to save trained model   
-dest      = "/home/amit/Downloads/Elemos/GenderClassificationProject/Voice Gender Detection using GMM/Mihup/Training data/GMM/"         
+dest      = "~/Training data/GMM/"         
 
 with open("maleaudios") as rf:
     filesM = [i.strip() for i in rf.readlines()]
@@ -45,7 +45,7 @@ featuresM = np.asarray(())
 featuresF = np.asarray(())
 
 # Featurization of Male audio files
-for m in filesM[:10000]:
+for m in filesM[:100000]:
     try:
         sr,audio  = read(m)
         vectorM   = get_MFCC(sr,audio)
@@ -56,7 +56,7 @@ for m in filesM[:10000]:
     except Exception as e:
         print("Exception in file {}".format(m))
 # Featurization of Female audio files
-for f in filesF[:10000]:
+for f in filesF[:100000]:
     try:
         sr,audio  = read(m)
         vectorF   = get_MFCC(sr,audio)
@@ -125,7 +125,7 @@ genders   = [fname.split("/")[-1].split(".gmm")[0] for fname in gmm_files]
 
 
 predCorrect = []
-for f in filesM[10000:]:
+for f in filesM[100000:]:
     try:
         
         sr, audio  = read(f)
@@ -145,7 +145,7 @@ for f in filesM[10000:]:
     except Exception as e:
         print("Exception in file{}".format(f))
         
-for f in filesF[10000:]:
+for f in filesF[100000:]:
     
     sr, audio  = read(f)
     try:
