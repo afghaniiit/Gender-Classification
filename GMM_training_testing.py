@@ -35,7 +35,7 @@ featuresF = np.asarray(())
 
 # Featurization of Male audio files
 
-for m in filesM[:100000]:
+for m in filesM[:10000]:
     try:
         sr,audio  = read(m)
         vectorM   = get_MFCC(sr,audio)
@@ -48,7 +48,7 @@ for m in filesM[:100000]:
         
 # Featurization of Female audio files
 
-for f in filesF[:100000]:
+for f in filesF[:10000]:
     try:
         sr,audio  = read(m)
         vectorF   = get_MFCC(sr,audio)
@@ -119,7 +119,7 @@ genders   = [fname.split("/")[-1].split(".gmm")[0] for fname in gmm_files]
 
 
 predCorrect = []
-for f in filesM[100000:]:
+for f in filesM[10000:]:
     try:
         
         sr, audio  = read(f)
@@ -139,7 +139,7 @@ for f in filesM[100000:]:
     except Exception as e:
         print("Exception in file{}".format(f))
         
-for f in filesF[100000:]:
+for f in filesF[10000:]:
     
     sr, audio  = read(f)
     try:
